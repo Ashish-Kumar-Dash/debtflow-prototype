@@ -1,73 +1,68 @@
-# Welcome to your Lovable project
+**AI-assisted DCA management reimagined for modern enterprises**
 
-## Project info
+---
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+## About This Prototype
 
-## How can I edit this code?
+DebtFlow AI is a **conceptual demonstration** of how Fortune 100 logistics teams could move beyond spreadsheets into intelligent, structured debt recovery workflows [web:21][web:25]. This mock prototype focuses on showcasing the **user experience, interaction design, and AI-assisted guidance** rather than production-grade infrastructure.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## ✨ What You'll See
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+### FedEx Ops Dashboard
+A centralized view with lightweight KPIs and an SLA-style heatmap that hints at case risk levels without deep backend complexity [web:21].
 
-Changes made via Lovable will be committed automatically to this repo.
+### DCA Portal – "My Cases"
+Clean, filterable case list with priority badges (High/Medium/Low) and a detail view showing how agents would interact with their assignments [web:25].
 
-**Use your preferred IDE**
+### Recovery Copilot™ (The Showpiece)
+Right-hand panel suggesting 2–3 next actions (Email/SMS/Call) with plain-English reasoning like *"Debtor opened email 3x but didn't click → Try SMS"* [web:28]. Logic is intentionally simple but makes the AI co-pilot concept tangible.
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Action Logging
+Dropdown to record agent actions and outcomes (contacted, no answer, promise-to-pay), creating the sense of an audit trail [web:24].
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### AI Scoring (Simulated)
+Priority scores and explanations generated from mock data to demonstrate explainable ML without requiring trained models [web:25][web:28].
 
-Follow these steps:
+---
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+## 🛠️ Tech Stack
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- **Frontend**: React + TypeScript + Tailwind/shadcn for modern UI [web:22][web:23]
+- **Backend**: Minimal API endpoints for auth and mock case data
+- **Data**: Synthetic cases designed to tell a compelling demo story [web:30]
 
-# Step 3: Install the necessary dependencies.
-npm i
+---
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+## 🚀 Quick Start
+
+Clone repository:
+git clone <YOUR_REPO_URL>
+cd debtflo-ai
+
+Install dependencies:
+npm install
+
+Start dev server:
 npm run dev
-```
 
-**Edit a file directly in GitHub**
+text
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+Visit `http://localhost:5173` and log in with demo credentials (check login page).
 
-**Use GitHub Codespaces**
+---
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+## 📋 Demo Flow
 
-## What technologies are used for this project?
+1. **Login** as FedEx Admin or DCA Agent
+2. **View dashboard** with mock KPIs and case heatmap
+3. **Open a case** to see Recovery Copilot suggestions
+4. **Log an action** and watch the UI update
+5. **Check analytics** to see simulated performance metrics
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🎯 Purpose
 
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+This prototype sells the **story and interaction flow** of AI-assisted debt recovery [web:21][web:28]. Heavy integrations, real ML models, and full compliance controls are intentionally left for production phase—keeping the demo fast, focused, and judge-friendly.
