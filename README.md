@@ -4,7 +4,7 @@
 
 ## About This Prototype
 
-DebtFlow AI is a **conceptual demonstration** of how Fortune 100 logistics teams could move beyond spreadsheets into intelligent, structured debt recovery workflows [web:21][web:25]. This mock prototype focuses on showcasing the **user experience, interaction design, and AI-assisted guidance** rather than production-grade infrastructure.
+DebtFlow  is a **conceptual demonstration** of how Fortune 100 logistics teams could move beyond spreadsheets into intelligent, structured debt recovery workflows [web:21][web:25]. This mock prototype focuses on showcasing the **user experience, interaction design, and AI-assisted guidance** rather than production-grade infrastructure.
 
 ---
 
@@ -39,7 +39,7 @@ Priority scores and explanations generated from mock data to demonstrate explain
 
 Clone repository:
 git clone <YOUR_REPO_URL>
-cd debtflo-ai
+cd debtflow-prototype
 
 Install dependencies:
 npm install

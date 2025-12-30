@@ -38,7 +38,7 @@ export function TopNav({ persona, onPersonaChange }: TopNavProps) {
             <span className="text-primary-foreground font-bold text-lg">D</span>
           </div>
           <div className="flex flex-col">
-            <span className="font-semibold text-foreground text-sm leading-tight">DebtFlo AI</span>
+            <span className="font-semibold text-foreground text-sm leading-tight">DebtFlow </span>
             <span className="text-[10px] text-muted-foreground leading-tight">by FedEx</span>
           </div>
         </Link>
