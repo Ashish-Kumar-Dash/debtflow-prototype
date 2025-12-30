@@ -29,7 +29,6 @@ export default function CaseDetail() {
   return (
     <div className="min-h-screen bg-background">
       <div className="p-6 lg:p-8 max-w-[1600px] mx-auto">
-        {/* Header */}
         <div className="flex items-center gap-4 mb-6">
           <Button variant="ghost" size="icon" onClick={() => navigate(-1)} className="shrink-0">
             <ArrowLeft className="w-5 h-5" />
@@ -40,14 +39,11 @@ export default function CaseDetail() {
           </div>
         </div>
 
-        {/* Split Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-6">
-          {/* Left Panel - Case Details */}
           <div className="lg:col-span-3">
             <CaseDetailPanel caseData={caseData} />
           </div>
 
-          {/* Right Panel - Recovery Copilot */}
           <div className="lg:col-span-2">
             <div className="sticky top-24">
               <RecoveryCopilot caseData={caseData} />

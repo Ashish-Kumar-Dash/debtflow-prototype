@@ -4,7 +4,7 @@ import { FileText, Users, Clock, Shield } from 'lucide-react';
 
 export default function AuditLogs() {
   const uniqueUsers = new Set(auditLogs.map(log => log.user)).size;
-  const todayLogs = auditLogs.filter(log => log.timestamp.startsWith('2024-02-05')).length;
+  const todayLogs = auditLogs.filter(log => log.timestamp.startsWith('2025-02-05')).length;
   const uniqueCases = new Set(auditLogs.map(log => log.caseId)).size;
 
   return (

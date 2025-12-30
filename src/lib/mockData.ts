@@ -1,5 +1,3 @@
-// Mock data for DebtFlo AI demo
-
 export interface Case {
   id: string;
   customerId: string;
@@ -87,7 +85,7 @@ export const slaTimelineData = [
 // Cases Data
 export const casesData: Case[] = [
   {
-    id: 'CASE-2024-001',
+    id: 'CASE-2025-001',
     customerId: 'CUST-7821',
     customerName: 'Acme Corp',
     customerEmail: 'billing@acmecorp.com',
@@ -96,10 +94,10 @@ export const casesData: Case[] = [
     ageingDays: 45,
     priority: 'High',
     slaStatus: 'at-risk',
-    slaDeadline: '2024-02-15',
-    invoiceNumber: 'INV-2024-78234',
+    slaDeadline: '2025-02-15',
+    invoiceNumber: 'INV-2025-78234',
     invoiceDate: '2023-12-15',
-    lastContactDate: '2024-01-28',
+    lastContactDate: '2025-01-28',
     paymentHistory: [
       { date: '2023-10-15', amount: 25000, status: 'completed' },
       { date: '2023-11-15', amount: 15000, status: 'partial' },
@@ -109,7 +107,7 @@ export const casesData: Case[] = [
     assignedDca: 'Apex Recovery Solutions',
   },
   {
-    id: 'CASE-2024-002',
+    id: 'CASE-2025-002',
     customerId: 'CUST-4523',
     customerName: 'TechStart Inc',
     customerEmail: 'accounts@techstart.io',
@@ -118,10 +116,10 @@ export const casesData: Case[] = [
     ageingDays: 32,
     priority: 'Medium',
     slaStatus: 'on-track',
-    slaDeadline: '2024-02-28',
-    invoiceNumber: 'INV-2024-78456',
-    invoiceDate: '2024-01-02',
-    lastContactDate: '2024-02-01',
+    slaDeadline: '2025-02-28',
+    invoiceNumber: 'INV-2025-78456',
+    invoiceDate: '2025-01-02',
+    lastContactDate: '2025-02-01',
     paymentHistory: [
       { date: '2023-11-02', amount: 23450, status: 'completed' },
       { date: '2023-12-02', amount: 23450, status: 'completed' },
@@ -130,7 +128,7 @@ export const casesData: Case[] = [
     assignedDca: 'Sterling Collections',
   },
   {
-    id: 'CASE-2024-003',
+    id: 'CASE-2025-003',
     customerId: 'CUST-9012',
     customerName: 'Global Logistics LLC',
     customerEmail: 'finance@globallog.com',
@@ -139,10 +137,10 @@ export const casesData: Case[] = [
     ageingDays: 67,
     priority: 'High',
     slaStatus: 'breached',
-    slaDeadline: '2024-01-20',
-    invoiceNumber: 'INV-2024-77891',
+    slaDeadline: '2025-01-20',
+    invoiceNumber: 'INV-2025-77891',
     invoiceDate: '2023-11-20',
-    lastContactDate: '2024-01-15',
+    lastContactDate: '2025-01-15',
     paymentHistory: [
       { date: '2023-09-20', amount: 45000, status: 'completed' },
       { date: '2023-10-20', amount: 0, status: 'failed' },
@@ -151,7 +149,7 @@ export const casesData: Case[] = [
     assignedDca: 'Meridian Debt Services',
   },
   {
-    id: 'CASE-2024-004',
+    id: 'CASE-2025-004',
     customerId: 'CUST-3456',
     customerName: 'Sunrise Manufacturing',
     customerEmail: 'ap@sunrise-mfg.com',
@@ -160,10 +158,10 @@ export const casesData: Case[] = [
     ageingDays: 18,
     priority: 'Low',
     slaStatus: 'on-track',
-    slaDeadline: '2024-03-10',
-    invoiceNumber: 'INV-2024-79012',
-    invoiceDate: '2024-01-22',
-    lastContactDate: '2024-02-05',
+    slaDeadline: '2025-03-10',
+    invoiceNumber: 'INV-2025-79012',
+    invoiceDate: '2025-01-22',
+    lastContactDate: '2025-02-05',
     paymentHistory: [
       { date: '2023-12-22', amount: 12890, status: 'completed' },
     ],
@@ -171,7 +169,7 @@ export const casesData: Case[] = [
     assignedDca: 'Apex Recovery Solutions',
   },
   {
-    id: 'CASE-2024-005',
+    id: 'CASE-2025-005',
     customerId: 'CUST-6789',
     customerName: 'Metro Retail Group',
     customerEmail: 'payments@metroretail.com',
@@ -180,10 +178,10 @@ export const casesData: Case[] = [
     ageingDays: 52,
     priority: 'High',
     slaStatus: 'at-risk',
-    slaDeadline: '2024-02-12',
-    invoiceNumber: 'INV-2024-78567',
+    slaDeadline: '2025-02-12',
+    invoiceNumber: 'INV-2025-78567',
     invoiceDate: '2023-12-08',
-    lastContactDate: '2024-01-30',
+    lastContactDate: '2025-01-30',
     paymentHistory: [
       { date: '2023-10-08', amount: 78000, status: 'completed' },
       { date: '2023-11-08', amount: 40000, status: 'partial' },
@@ -193,7 +191,7 @@ export const casesData: Case[] = [
     assignedDca: 'Catalyst Recovery Group',
   },
   {
-    id: 'CASE-2024-006',
+    id: 'CASE-2025-006',
     customerId: 'CUST-1234',
     customerName: 'Urban Delivery Co',
     customerEmail: 'finance@urbandelivery.net',
@@ -202,10 +200,10 @@ export const casesData: Case[] = [
     ageingDays: 28,
     priority: 'Medium',
     slaStatus: 'on-track',
-    slaDeadline: '2024-02-25',
-    invoiceNumber: 'INV-2024-79234',
-    invoiceDate: '2024-01-10',
-    lastContactDate: '2024-02-03',
+    slaDeadline: '2025-02-25',
+    invoiceNumber: 'INV-2025-79234',
+    invoiceDate: '2025-01-10',
+    lastContactDate: '2025-02-03',
     paymentHistory: [],
     notes: ['New customer, first invoice'],
     assignedDca: 'Vanguard Collections',
@@ -214,20 +212,20 @@ export const casesData: Case[] = [
 
 // Audit Logs
 export const auditLogs: AuditLog[] = [
-  { id: 'log-1', timestamp: '2024-02-05 14:32:18', user: 'Sarah Johnson', caseId: 'CASE-2024-001', action: 'Phone Call', details: 'Left voicemail, customer unavailable' },
-  { id: 'log-2', timestamp: '2024-02-05 13:45:02', user: 'Mike Chen', caseId: 'CASE-2024-003', action: 'Email Sent', details: 'Payment reminder with escalation notice' },
-  { id: 'log-3', timestamp: '2024-02-05 11:20:45', user: 'Emily Davis', caseId: 'CASE-2024-005', action: 'Payment Plan', details: 'Negotiated 3-month installment plan' },
-  { id: 'log-4', timestamp: '2024-02-05 10:15:33', user: 'James Wilson', caseId: 'CASE-2024-002', action: 'SMS Sent', details: 'Payment link reminder' },
-  { id: 'log-5', timestamp: '2024-02-04 16:48:21', user: 'Sarah Johnson', caseId: 'CASE-2024-001', action: 'Note Added', details: 'Customer requested callback on Monday' },
-  { id: 'log-6', timestamp: '2024-02-04 15:22:09', user: 'Alex Rodriguez', caseId: 'CASE-2024-004', action: 'Case Assigned', details: 'Assigned to Apex Recovery Solutions' },
-  { id: 'log-7', timestamp: '2024-02-04 14:05:47', user: 'Mike Chen', caseId: 'CASE-2024-006', action: 'Email Sent', details: 'Initial contact email' },
-  { id: 'log-8', timestamp: '2024-02-04 11:33:12', user: 'Emily Davis', caseId: 'CASE-2024-003', action: 'Escalation', details: 'Escalated to legal review' },
+  { id: 'log-1', timestamp: '2025-02-05 14:32:18', user: 'Sarah Bernard', caseId: 'CASE-2025-001', action: 'Phone Call', details: 'Left voicemail, customer unavailable' },
+  { id: 'log-2', timestamp: '2025-02-05 13:45:02', user: 'John Doe', caseId: 'CASE-2025-003', action: 'Email Sent', details: 'Payment reminder with escalation notice' },
+  { id: 'log-3', timestamp: '2025-02-05 11:20:45', user: 'Emily Adams', caseId: 'CASE-2025-005', action: 'Payment Plan', details: 'Negotiated 3-month installment plan' },
+  { id: 'log-4', timestamp: '2025-02-05 10:15:33', user: 'James Wilson', caseId: 'CASE-2025-002', action: 'SMS Sent', details: 'Payment link reminder' },
+  { id: 'log-5', timestamp: '2025-02-04 16:48:21', user: 'Sarah Bernard', caseId: 'CASE-2025-001', action: 'Note Added', details: 'Customer requested callback on Monday' },
+  { id: 'log-6', timestamp: '2025-02-04 15:22:09', user: 'Alex Marks', caseId: 'CASE-2025-004', action: 'Case Assigned', details: 'Assigned to Apex Recovery Solutions' },
+  { id: 'log-7', timestamp: '2025-02-04 14:05:47', user: 'John Doe', caseId: 'CASE-2025-006', action: 'Email Sent', details: 'Initial contact email' },
+  { id: 'log-8', timestamp: '2025-02-04 11:33:12', user: 'Emily Adams', caseId: 'CASE-2025-003', action: 'Escalation', details: 'Escalated to legal review' },
 ];
 
 // AI Recommendations Generator
 export function getAIRecommendations(caseData: Case): AIRecommendation[] {
   const recommendations: AIRecommendation[] = [];
-  
+
   // Logic based on case data to generate contextual recommendations
   if (caseData.ageingDays > 60) {
     recommendations.push({
@@ -237,7 +235,7 @@ export function getAIRecommendations(caseData: Case): AIRecommendation[] {
       timing: 'Best time: 10 AM - 12 PM (based on customer timezone)',
     });
   }
-  
+
   if (caseData.paymentHistory.some(p => p.status === 'partial')) {
     recommendations.push({
       type: 'sms',
@@ -246,7 +244,7 @@ export function getAIRecommendations(caseData: Case): AIRecommendation[] {
       timing: 'Send immediately - customer typically responds within 2 hours',
     });
   }
-  
+
   if (caseData.slaStatus === 'at-risk') {
     recommendations.push({
       type: 'email',
@@ -255,7 +253,7 @@ export function getAIRecommendations(caseData: Case): AIRecommendation[] {
       timing: 'Send today before 5 PM for same-day review probability',
     });
   }
-  
+
   // Default recommendations if none match
   if (recommendations.length === 0) {
     recommendations.push(
@@ -273,7 +271,7 @@ export function getAIRecommendations(caseData: Case): AIRecommendation[] {
       }
     );
   }
-  
+
   // Sort by confidence
   return recommendations.sort((a, b) => b.confidence - a.confidence);
 }
