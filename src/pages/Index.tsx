@@ -8,14 +8,14 @@ import AllCases from './AllCases';
 import DCAs from './DCAs';
 import SLAMonitor from './SLAMonitor';
 import AuditLogs from './AuditLogs';
-
+import Automation from './AutomationHub'
 export default function Index() {
   const [persona, setPersona] = useState<'admin' | 'agent'>('admin');
 
   return (
     <div className="min-h-screen bg-background">
       <TopNav persona={persona} onPersonaChange={setPersona} />
-      
+
       {persona === 'admin' ? (
         <Routes>
           <Route path="/" element={<AdminDashboard />} />
@@ -24,6 +24,7 @@ export default function Index() {
           <Route path="/dcas" element={<DCAs />} />
           <Route path="/sla-monitor" element={<SLAMonitor />} />
           <Route path="/audit-logs" element={<AuditLogs />} />
+          <Route path="/automation" element={<Automation />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       ) : (

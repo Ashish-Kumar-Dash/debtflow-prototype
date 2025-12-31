@@ -49,6 +49,156 @@ export interface AIRecommendation {
   timing: string;
 }
 
+// 1. Automated Outreach Campaign
+export interface OutreachCampaign {
+  id: string;
+  caseId: string;
+  channel: 'sms' | 'email' | 'whatsapp' | 'voice';
+  status: 'pending' | 'sent' | 'delivered' | 'opened' | 'clicked' | 'failed';
+  sentAt: string;
+  deliveredAt?: string;
+  openedAt?: string;
+  clickedAt?: string;
+  message: string;
+  debtor_response?: string;
+  responseReceivedAt?: string;
+}
+
+// 2. LLM-Generated Message
+export interface GeneratedMessage {
+  id: string;
+  caseId: string;
+  debtor_name: string;
+  debtor_age: number;
+  debtor_occupation: string;
+  variant: 1 | 2 | 3;
+  content: string;
+  tone: 'empathetic' | 'firm' | 'professional';
+  compliance_status: 'safe' | 'flagged' | 'blocked';
+  flagged_phrases?: string[];
+  engagement_score?: number; // predicted engagement %
+}
+
+// 3. Debtor Response Processing
+export interface DebitorResponse {
+  id: string;
+  caseId: string;
+  channel: 'email' | 'sms' | 'voice_transcript' | 'document';
+  receivedAt: string;
+  rawContent: string;
+  extracted_data: {
+    promise_to_pay: boolean;
+    amount?: number;
+    due_date?: string;
+    hardship_claim?: string;
+    escalation_needed?: boolean;
+  };
+  confidence_score: number; // 0-1 OCR/NLP accuracy
+  manual_review_needed: boolean;
+}
+
+// 4. Real-Time Compliance Check
+export interface ComplianceCheck {
+  id: string;
+  timestamp: string;
+  caseId: string;
+  agentId: string;
+  channel: 'call' | 'email' | 'sms';
+  content: string;
+  violations: ComplianceViolation[];
+  compliance_score: number; // 0-100%
+  is_blocked: boolean;
+}
+
+export interface ComplianceViolation {
+  rule: string;
+  severity: 'warning' | 'error';
+  phrase?: string;
+  guideline: 'FDCPA' | 'CFPB' | 'TCPA';
+  correction?: string;
+}
+
+// 5. Escalation Intelligence
+export interface EscalationRecommendation {
+  id: string;
+  caseId: string;
+  action: 'legal_escalation' | 'credit_bureau' | 'payment_plan' | 'hardship_review' | 'write_off';
+  confidence: number; // 0-1 likelihood of success
+  reasoning: string;
+  predicted_recovery_rate?: number;
+  estimated_timeline?: string;
+  risk_level: 'low' | 'medium' | 'high';
+}
+
+// 6. Social & Alternative Data Signal
+export interface RiskSignal {
+  id: string;
+  caseId: string;
+  signal_type: 'employment_change' | 'relocation' | 'financial_stress' | 'business_closure';
+  source: 'linkedin' | 'facebook' | 'twitter' | 'employment_database' | 'telematics';
+  description: string;
+  detected_at: string;
+  risk_increase: number; // 0-1, how much it increases flight risk
+  confidence: number; // 0-1, confidence in signal
+}
+
+// 7. Multi-Channel Campaign Sequence
+export interface CampaignSequence {
+  id: string;
+  caseId: string;
+  sequence_type: 'initial_contact' | 'follow_up' | 'escalation' | 'final_notice';
+  channels: ChannelStep[];
+  overall_success_rate: number;
+  created_at: string;
+}
+
+export interface ChannelStep {
+  step_number: number;
+  channel: 'email' | 'sms' | 'whatsapp' | 'call';
+  wait_hours: number;
+  template_name: string;
+  sent: boolean;
+  sent_at?: string;
+  engagement_status?: 'pending' | 'opened' | 'clicked' | 'no_response';
+}
+
+// 8. Payment Plan Agreement
+export interface PaymentPlan {
+  id: string;
+  caseId: string;
+  debtor_name: string;
+  total_debt: number;
+  installments: PaymentInstallment[];
+  interest_rate: number;
+  status: 'proposed' | 'accepted' | 'signed' | 'active' | 'completed' | 'defaulted';
+  created_at: string;
+  signed_at?: string;
+  negotiation_score?: number; // how much debtor negotiated down
+}
+
+export interface PaymentInstallment {
+  number: number;
+  due_date: string;
+  amount: number;
+  paid: boolean;
+  paid_date?: string;
+  status: 'pending' | 'completed' | 'missed' | 'partial';
+}
+
+// 9. Churn Prediction
+export interface ChurnPrediction {
+  id: string;
+  caseId: string;
+  debtor_name: string;
+  churn_risk_score: number; // 0-1, likelihood of ghosting
+  risk_level: 'low' | 'medium' | 'high';
+  churn_signals: string[];
+  last_engagement: string;
+  recommended_action: 'special_offer' | 'escalate_agent' | 'hardship_program' | 'monitor';
+  special_offer?: string; // e.g., "Waive 20% if paid by Friday"
+  created_at: string;
+}
+
 // KPI Data
 export const kpiData = {
   totalOutstanding: 12847392,
@@ -284,4 +434,419 @@ export const recoveryTrendData = [
   { month: 'Nov', recovered: 2340000, target: 2100000 },
   { month: 'Dec', recovered: 2180000, target: 2200000 },
   { month: 'Jan', recovered: 2450000, target: 2200000 },
+];
+
+// ===== NEW FEATURES MOCK DATA =====
+
+// 1. Automated Outreach Campaigns
+export const outreachCampaigns: OutreachCampaign[] = [
+  {
+    id: 'campaign-1',
+    caseId: 'CASE-2025-001',
+    channel: 'sms',
+    status: 'delivered',
+    sentAt: '2025-02-05 09:15:00',
+    deliveredAt: '2025-02-05 09:16:00',
+    message: 'Hi Acme Corp, Invoice INV-2025-78234 for $47,892.50 is 45 days overdue. Pay now: https://pay.fedex.com/CASE-2025-001',
+  },
+  {
+    id: 'campaign-2',
+    caseId: 'CASE-2025-001',
+    channel: 'whatsapp',
+    status: 'pending',
+    sentAt: '2025-02-05 10:30:00',
+    message: 'Would you like to discuss a payment plan for your outstanding invoice?',
+  },
+  {
+    id: 'campaign-3',
+    caseId: 'CASE-2025-003',
+    channel: 'voice',
+    status: 'sent',
+    sentAt: '2025-02-05 14:00:00',
+    message: 'Auto-call: This is FedEx calling about invoice INV-2025-77891. Press 1 to pay, 2 to speak with agent, 3 for more time.',
+  },
+  {
+    id: 'campaign-4',
+    caseId: 'CASE-2025-005',
+    channel: 'email',
+    status: 'opened',
+    sentAt: '2025-02-04 08:00:00',
+    openedAt: '2025-02-04 10:45:00',
+    message: 'Payment Reminder: Your invoice is approaching SLA deadline. Settle now to avoid legal action.',
+  },
+];
+
+// 2. LLM-Generated Messages with variants
+export const generatedMessages: GeneratedMessage[] = [
+  {
+    id: 'msg-1',
+    caseId: 'CASE-2025-001',
+    debtor_name: 'Acme Corp',
+    debtor_age: 45,
+    debtor_occupation: 'Manufacturing Executive',
+    variant: 1,
+    content: 'Hi there,\n\nWe noticed your recent payment hasn\'t come through for invoice INV-2025-78234 ($47,892.50). Life gets busy—here\'s a quick link to settle this in under 2 minutes:\n\nhttps://pay.fedex.com/CASE-2025-001\n\nIf you need assistance with a payment plan, just reply to this email.\n\nBest regards,\nFedEx Collections',
+    tone: 'empathetic',
+    compliance_status: 'safe',
+    engagement_score: 68,
+  },
+  {
+    id: 'msg-2',
+    caseId: 'CASE-2025-001',
+    debtor_name: 'Acme Corp',
+    debtor_age: 45,
+    debtor_occupation: 'Manufacturing Executive',
+    variant: 2,
+    content: 'Urgent: Invoice INV-2025-78234 is 45 days overdue ($47,892.50). Immediate action required to avoid account suspension. Pay now: https://pay.fedex.com/CASE-2025-001',
+    tone: 'firm',
+    compliance_status: 'safe',
+    engagement_score: 45,
+  },
+  {
+    id: 'msg-3',
+    caseId: 'CASE-2025-001',
+    debtor_name: 'Acme Corp',
+    debtor_age: 45,
+    debtor_occupation: 'Manufacturing Executive',
+    variant: 3,
+    content: 'Dear Acme Corp,\n\nWe hope this finds you well. We wanted to reach out regarding your outstanding invoice INV-2025-78234 ($47,892.50). We understand that managing multiple vendors can be challenging.\n\nWe\'d like to work with you to resolve this. Please contact us at 1-800-FEDEX-PAY or click here to set up a payment arrangement: https://pay.fedex.com/CASE-2025-001\n\nThank you for your prompt attention.\n\nSincerely,\nFedEx Collections',
+    tone: 'professional',
+    compliance_status: 'safe',
+    engagement_score: 72,
+  },
+];
+
+// 3. Debtor Response Processing (OCR/NLP)
+export const debiorResponses: DebitorResponse[] = [
+  {
+    id: 'resp-1',
+    caseId: 'CASE-2025-002',
+    channel: 'email',
+    receivedAt: '2025-02-05 11:20:00',
+    rawContent: 'Hi, I can pay $10,000 now and $13,450 by Feb 28. Will that work?',
+    extracted_data: {
+      promise_to_pay: true,
+      amount: 23450,
+      due_date: '2025-02-28',
+      hardship_claim: false,
+      escalation_needed: false,
+    },
+    confidence_score: 0.98,
+    manual_review_needed: false,
+  },
+  {
+    id: 'resp-2',
+    caseId: 'CASE-2025-005',
+    channel: 'email',
+    receivedAt: '2025-02-05 14:35:00',
+    rawContent: '[Screenshot of bank transfer confirmation showing payment of $78,000 on 2025-02-05]',
+    extracted_data: {
+      promise_to_pay: false,
+      amount: 78000,
+      due_date: '2025-02-05',
+      escalation_needed: false,
+    },
+    confidence_score: 0.92,
+    manual_review_needed: false,
+  },
+  {
+    id: 'resp-3',
+    caseId: 'CASE-2025-003',
+    channel: 'email',
+    receivedAt: '2025-02-05 13:00:00',
+    rawContent: 'I lost my job last month due to company layoffs. Medical bills are piling up. Can we discuss options?',
+    extracted_data: {
+      promise_to_pay: false,
+      hardship_claim: 'Job loss, medical expenses',
+      escalation_needed: true,
+    },
+    confidence_score: 0.95,
+    manual_review_needed: true,
+  },
+];
+
+// 4. Real-Time Compliance Monitoring
+export const complianceChecks: ComplianceCheck[] = [
+  {
+    id: 'comp-1',
+    timestamp: '2025-02-05 14:32:00',
+    caseId: 'CASE-2025-001',
+    agentId: 'agent-sarah',
+    channel: 'call',
+    content: 'We\'ll sue you if you don\'t pay immediately.',
+    violations: [
+      {
+        rule: 'Threat of legal action without intent',
+        severity: 'error',
+        phrase: 'We\'ll sue you',
+        guideline: 'FDCPA',
+        correction: 'Use: "If this matter is not resolved, we may pursue legal remedies."',
+      },
+    ],
+    compliance_score: 0,
+    is_blocked: true,
+  },
+  {
+    id: 'comp-2',
+    timestamp: '2025-02-05 15:10:00',
+    caseId: 'CASE-2025-002',
+    agentId: 'agent-john',
+    channel: 'email',
+    content: 'Hi there, I see your invoice is overdue. Here\'s a link to pay: [link]. Let me know if you have any questions.',
+    violations: [],
+    compliance_score: 100,
+    is_blocked: false,
+  },
+  {
+    id: 'comp-3',
+    timestamp: '2025-02-05 09:00:00',
+    caseId: 'CASE-2025-005',
+    agentId: 'agent-emily',
+    channel: 'call',
+    content: 'Called customer at workplace after they requested no workplace contact.',
+    violations: [
+      {
+        rule: 'Contacting at workplace after request to cease',
+        severity: 'error',
+        guideline: 'FDCPA',
+        correction: 'Contact only at home phone number going forward.',
+      },
+    ],
+    compliance_score: 0,
+    is_blocked: true,
+  },
+];
+
+// 5. Escalation Intelligence
+export const escalationRecommendations: EscalationRecommendation[] = [
+  {
+    id: 'esc-1',
+    caseId: 'CASE-2025-003',
+    action: 'legal_escalation',
+    confidence: 0.92,
+    reasoning: 'Debtor has ignored 10+ contact attempts over 62 days. Debt exceeds $10K. No historical payment records. Recommend legal escalation.',
+    predicted_recovery_rate: 0.45,
+    estimated_timeline: '120-180 days',
+    risk_level: 'high',
+  },
+  {
+    id: 'esc-2',
+    caseId: 'CASE-2025-002',
+    action: 'payment_plan',
+    confidence: 0.88,
+    reasoning: 'Debtor has good payment history and is engaging. Claims temporary cash flow issues. Recommend flexible payment plan.',
+    predicted_recovery_rate: 0.78,
+    estimated_timeline: '30-60 days',
+    risk_level: 'low',
+  },
+  {
+    id: 'esc-3',
+    caseId: 'CASE-2025-005',
+    action: 'hardship_review',
+    confidence: 0.85,
+    reasoning: 'Debtor cited job loss and medical hardship. Recommend hardship program review for partial settlement.',
+    predicted_recovery_rate: 0.65,
+    estimated_timeline: '45-75 days',
+    risk_level: 'medium',
+  },
+  {
+    id: 'esc-4',
+    caseId: 'CASE-2025-006',
+    action: 'write_off',
+    confidence: 0.72,
+    reasoning: 'New customer with small balance. Limited recovery prospects. Recommend write-off for tax purposes.',
+    predicted_recovery_rate: 0.15,
+    risk_level: 'low',
+  },
+];
+
+// 6. Social Media & Risk Signals
+export const riskSignals: RiskSignal[] = [
+  {
+    id: 'signal-1',
+    caseId: 'CASE-2025-003',
+    signal_type: 'employment_change',
+    source: 'linkedin',
+    description: 'LinkedIn profile updated: "Open to work" status activated 10 days ago',
+    detected_at: '2025-02-03',
+    risk_increase: 0.35,
+    confidence: 0.88,
+  },
+  {
+    id: 'signal-2',
+    caseId: 'CASE-2025-001',
+    signal_type: 'relocation',
+    source: 'employment_database',
+    description: 'Company headquarters address changed from Chicago to Dallas',
+    detected_at: '2025-02-01',
+    risk_increase: 0.25,
+    confidence: 0.92,
+  },
+  {
+    id: 'signal-3',
+    caseId: 'CASE-2025-005',
+    signal_type: 'financial_stress',
+    source: 'twitter',
+    description: 'Social media posts indicate financial difficulty and job stress',
+    detected_at: '2025-02-04',
+    risk_increase: 0.40,
+    confidence: 0.76,
+  },
+];
+
+// 7. Multi-Channel Campaign Sequences
+export const campaignSequences: CampaignSequence[] = [
+  {
+    id: 'seq-1',
+    caseId: 'CASE-2025-001',
+    sequence_type: 'initial_contact',
+    channels: [
+      {
+        step_number: 1,
+        channel: 'email',
+        wait_hours: 0,
+        template_name: 'initial_reminder',
+        sent: true,
+        sent_at: '2025-02-04 08:00:00',
+        engagement_status: 'opened',
+      },
+      {
+        step_number: 2,
+        channel: 'sms',
+        wait_hours: 24,
+        template_name: 'urgent_sms',
+        sent: true,
+        sent_at: '2025-02-05 08:00:00',
+        engagement_status: 'delivered',
+      },
+      {
+        step_number: 3,
+        channel: 'call',
+        wait_hours: 48,
+        template_name: 'agent_call',
+        sent: false,
+        engagement_status: 'pending',
+      },
+    ],
+    overall_success_rate: 0.68,
+    created_at: '2025-02-04 08:00:00',
+  },
+  {
+    id: 'seq-2',
+    caseId: 'CASE-2025-003',
+    sequence_type: 'escalation',
+    channels: [
+      {
+        step_number: 1,
+        channel: 'email',
+        wait_hours: 0,
+        template_name: 'final_notice',
+        sent: true,
+        sent_at: '2025-02-03 10:00:00',
+        engagement_status: 'opened',
+      },
+      {
+        step_number: 2,
+        channel: 'call',
+        wait_hours: 12,
+        template_name: 'supervisor_call',
+        sent: true,
+        sent_at: '2025-02-03 22:00:00',
+        engagement_status: 'no_response',
+      },
+      {
+        step_number: 3,
+        channel: 'whatsapp',
+        wait_hours: 24,
+        template_name: 'legal_notice_message',
+        sent: false,
+        engagement_status: 'pending',
+      },
+    ],
+    overall_success_rate: 0.35,
+    created_at: '2025-02-02 10:00:00',
+  },
+];
+
+// 8. Payment Plan Negotiations
+export const paymentPlans: PaymentPlan[] = [
+  {
+    id: 'plan-1',
+    caseId: 'CASE-2025-002',
+    debtor_name: 'TechStart Inc',
+    total_debt: 23450,
+    installments: [
+      { number: 1, due_date: '2025-02-15', amount: 5862.50, paid: true, paid_date: '2025-02-14', status: 'completed' },
+      { number: 2, due_date: '2025-03-15', amount: 5862.50, paid: false, status: 'pending' },
+      { number: 3, due_date: '2025-04-15', amount: 5862.50, paid: false, status: 'pending' },
+      { number: 4, due_date: '2025-05-15', amount: 5862.50, paid: false, status: 'pending' },
+    ],
+    interest_rate: 0,
+    status: 'active',
+    created_at: '2025-02-01',
+    signed_at: '2025-02-02',
+    negotiation_score: 0.5, // debtor negotiated 0% interest
+  },
+  {
+    id: 'plan-2',
+    caseId: 'CASE-2025-005',
+    debtor_name: 'Metro Retail Group',
+    total_debt: 156780.25,
+    installments: [
+      { number: 1, due_date: '2025-02-20', amount: 62712.10, paid: false, status: 'pending' },
+      { number: 2, due_date: '2025-03-20', amount: 47034.08, paid: false, status: 'pending' },
+      { number: 3, due_date: '2025-04-20', amount: 47034.07, paid: false, status: 'pending' },
+    ],
+    interest_rate: 0.05,
+    status: 'proposed',
+    created_at: '2025-02-05',
+    negotiation_score: 0.75, // debtor negotiated 5% discount
+  },
+];
+
+// 9. Churn Predictions
+export const churnPredictions: ChurnPrediction[] = [
+  {
+    id: 'churn-1',
+    caseId: 'CASE-2025-001',
+    debtor_name: 'Acme Corp',
+    churn_risk_score: 0.72,
+    risk_level: 'high',
+    churn_signals: [
+      'Engagement score dropped from 0.8 → 0.3 in 7 days',
+      'Opened last 3 emails but never clicked payment link',
+      'Promised to pay 2x but missed both dates',
+    ],
+    last_engagement: '2025-02-04 10:45:00',
+    recommended_action: 'special_offer',
+    special_offer: 'Pay 80% of balance ($38,314) by Friday and we\'ll waive the remaining 20%',
+    created_at: '2025-02-05',
+  },
+  {
+    id: 'churn-2',
+    caseId: 'CASE-2025-003',
+    debtor_name: 'Global Logistics LLC',
+    churn_risk_score: 0.88,
+    risk_level: 'high',
+    churn_signals: [
+      'No response to 10+ contact attempts',
+      'Stopped answering calls after initially engaging',
+      'Last contact was 20 days ago',
+      'Risk signal: LinkedIn "open to work" status',
+    ],
+    last_engagement: '2025-01-15 14:00:00',
+    recommended_action: 'escalate_agent',
+    created_at: '2025-02-05',
+  },
+  {
+    id: 'churn-3',
+    caseId: 'CASE-2025-006',
+    debtor_name: 'Urban Delivery Co',
+    churn_risk_score: 0.35,
+    risk_level: 'low',
+    churn_signals: ['New customer (first invoice)', 'No engagement history yet'],
+    last_engagement: '2025-02-03 09:00:00',
+    recommended_action: 'monitor',
+    created_at: '2025-02-05',
+  },
 ];
