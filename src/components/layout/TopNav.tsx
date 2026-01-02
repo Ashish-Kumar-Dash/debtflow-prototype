@@ -20,6 +20,7 @@ const adminNavItems = [
   { label: 'SLA Monitor', href: '/sla-monitor', icon: Activity },
   { label: 'Audit Logs', href: '/audit-logs', icon: FileText },
   { label: 'Automation', href: '/automation', icon: Zap },
+  { label: 'Innovation', href: '/innovation', icon: Zap },
 ];
 
 const agentNavItems = [

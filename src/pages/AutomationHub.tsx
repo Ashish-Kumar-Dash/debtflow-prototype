@@ -7,8 +7,11 @@ import { MultiChannelOrchestration } from '@/components/automation/MultiChannelO
 import { PaymentPlanNegotiation } from '@/components/automation/PaymentPlanNegotiation';
 import { ChurnPrediction } from '@/components/automation/ChurnPrediction';
 import { RiskSignalsMonitor } from '@/components/automation/RiskSignalsMonitor';
-import { Bot, Zap, Brain, Shield } from 'lucide-react';
+import { SettlementSandbox } from '@/components/automation/SettlementSandbox';
+import { DCAMarketplace } from '@/components/automation/DCAMarketplace';
+import { Bot, Zap, Brain, Shield, Sparkles } from 'lucide-react';
 import { Card } from '@/components/ui/card';
+import { Link } from 'react-router-dom';
 
 export default function AutomationHub() {
     return (
@@ -132,6 +135,20 @@ export default function AutomationHub() {
                         </h2>
                     </div>
                     <RiskSignalsMonitor />
+                </div>
+
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between border-b pb-2">
+                        <div className="flex items-center gap-2">
+                            <Sparkles className="h-5 w-5 text-primary" />
+                            <h2 className="text-xl font-semibold text-foreground">Innovation Snapshot</h2>
+                        </div>
+                        <Link to="/innovation" className="text-sm text-primary hover:underline">Open Innovation Lab</Link>
+                    </div>
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <SettlementSandbox />
+                        <DCAMarketplace />
+                    </div>
                 </div>
             </div>
         </div>

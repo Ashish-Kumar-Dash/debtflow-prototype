@@ -199,6 +199,98 @@ export interface ChurnPrediction {
   created_at: string;
 }
 
+// 10. Settlement Sandbox
+export interface SettlementOffer {
+  id: string;
+  caseId: string;
+  debtor_name: string;
+  total_balance: number;
+  recommended_settlement_pct: number; // e.g., 0.7 means 70% settlement
+  predicted_full_recovery_prob: number; // 0-1
+  predicted_settlement_prob: number; // 0-1
+  early_bird_discount?: number; // optional additional discount
+  settlement_window_days: number;
+  rationale: string;
+  status: 'recommended' | 'presented' | 'accepted' | 'expired';
+}
+
+// 11. DCA Marketplace (Champion vs Challenger)
+export interface MarketplaceRound {
+  id: string;
+  cohort: string;
+  champion: string;
+  challenger: string;
+  reserved_share_pct: number; // portion of cases reserved for challenger
+  allocation_window_days: number;
+  metrics: {
+    recovery_rate: number;
+    avg_days_to_recover: number;
+    compliance_score: number;
+    debtor_nps: number;
+  };
+  challenger_metrics: {
+    recovery_rate: number;
+    avg_days_to_recover: number;
+    compliance_score: number;
+    debtor_nps: number;
+  };
+  winner?: 'champion' | 'challenger';
+}
+
+// 12. Clean Room Reconciliation
+export interface ReconcilerEvent {
+  id: string;
+  caseId: string;
+  source_system: 'SAP' | 'Oracle' | 'Stripe' | 'BankFeed';
+  event_type: 'payment_match' | 'dispute_flag' | 'duplicate_contact' | 'write_off';
+  detected_at: string;
+  amount?: number;
+  status: 'open' | 'resolved' | 'ignored';
+  resolution_note?: string;
+}
+
+// 13. Multi-Entity / Multi-Currency
+export interface EntityProfile {
+  id: string;
+  name: string;
+  region: string;
+  currency: string;
+  timezone: string;
+  local_compliance: string[];
+  dcas: string[];
+  cases: number;
+  rules_summary: string;
+}
+
+// 14. AI Reasoning (Assignment rationale)
+export interface AssignmentReasoning {
+  id: string;
+  caseId: string;
+  assigned_to: string;
+  confidence: number;
+  factors: string[];
+  expected_recovery_rate: number;
+  justification: string;
+}
+
+// 15. Regulatory Kill Switch
+export interface KillSwitchCase {
+  id: string;
+  caseId: string;
+  debtor_name: string;
+  trigger_phrase: string;
+  channel: 'chat' | 'call' | 'email';
+  triggered_at: string;
+  status: 'locked' | 'review' | 'released';
+  action_required: string;
+}
+
+// 16. Visualization Data
+export interface SankeyFlow {
+  stage: 'overdue' | 'assigned' | 'recovered' | 'written_off';
+  amount: number;
+}
+
 // KPI Data
 export const kpiData = {
   totalOutstanding: 12847392,
@@ -849,4 +941,235 @@ export const churnPredictions: ChurnPrediction[] = [
     recommended_action: 'monitor',
     created_at: '2025-02-05',
   },
+];
+
+// 10. Settlement Sandbox
+export const settlementOffers: SettlementOffer[] = [
+  {
+    id: 'settle-1',
+    caseId: 'CASE-2025-007',
+    debtor_name: 'Pacific Freight Co',
+    total_balance: 98200,
+    recommended_settlement_pct: 0.7,
+    predicted_full_recovery_prob: 0.32,
+    predicted_settlement_prob: 0.78,
+    early_bird_discount: 0.05,
+    settlement_window_days: 10,
+    rationale: 'Similar freight debtors accepted 70% lump-sum within 14 days; cash flow forecast weak.',
+    status: 'recommended',
+  },
+  {
+    id: 'settle-2',
+    caseId: 'CASE-2025-008',
+    debtor_name: 'Northwind Imports',
+    total_balance: 45600,
+    recommended_settlement_pct: 0.65,
+    predicted_full_recovery_prob: 0.28,
+    predicted_settlement_prob: 0.72,
+    settlement_window_days: 7,
+    rationale: 'Low engagement and ageing >90 days; 65% settlement yields faster liquidation.',
+    status: 'presented',
+  },
+  {
+    id: 'settle-3',
+    caseId: 'CASE-2025-009',
+    debtor_name: 'Europa Logistics',
+    total_balance: 120500,
+    recommended_settlement_pct: 0.74,
+    predicted_full_recovery_prob: 0.4,
+    predicted_settlement_prob: 0.81,
+    early_bird_discount: 0.03,
+    settlement_window_days: 5,
+    rationale: 'EMEA freight invoices show 18% higher acceptance with “early bird” 3% incentives.',
+    status: 'accepted',
+  },
+];
+
+// 11. DCA Marketplace (Champion vs Challenger)
+export const marketplaceRounds: MarketplaceRound[] = [
+  {
+    id: 'round-1',
+    cohort: 'Q1-Enterprise Freight',
+    champion: 'Atlas Recoveries',
+    challenger: 'BrightPath Collections',
+    reserved_share_pct: 0.1,
+    allocation_window_days: 30,
+    metrics: {
+      recovery_rate: 0.62,
+      avg_days_to_recover: 38,
+      compliance_score: 0.98,
+      debtor_nps: 41,
+    },
+    challenger_metrics: {
+      recovery_rate: 0.58,
+      avg_days_to_recover: 33,
+      compliance_score: 0.96,
+      debtor_nps: 52,
+    },
+    winner: 'champion',
+  },
+  {
+    id: 'round-2',
+    cohort: 'SMB Ground (US West)',
+    champion: 'Summit DCA',
+    challenger: 'Pioneer Recoveries',
+    reserved_share_pct: 0.1,
+    allocation_window_days: 21,
+    metrics: {
+      recovery_rate: 0.55,
+      avg_days_to_recover: 29,
+      compliance_score: 0.94,
+      debtor_nps: 38,
+    },
+    challenger_metrics: {
+      recovery_rate: 0.6,
+      avg_days_to_recover: 31,
+      compliance_score: 0.97,
+      debtor_nps: 46,
+    },
+    winner: 'challenger',
+  },
+];
+
+// 12. Clean Room Reconciliation
+export const reconciliationEvents: ReconcilerEvent[] = [
+  {
+    id: 'rec-1',
+    caseId: 'CASE-2025-002',
+    source_system: 'SAP',
+    event_type: 'payment_match',
+    detected_at: '2025-02-06 09:10:00',
+    amount: 23450,
+    status: 'resolved',
+    resolution_note: 'Payment posted in SAP; case auto-closed in DCA portal to prevent double contact.',
+  },
+  {
+    id: 'rec-2',
+    caseId: 'CASE-2025-010',
+    source_system: 'Oracle',
+    event_type: 'duplicate_contact',
+    detected_at: '2025-02-06 09:30:00',
+    status: 'open',
+    resolution_note: 'ERP shows promise-to-pay; DCA outreach paused pending confirmation.',
+  },
+  {
+    id: 'rec-3',
+    caseId: 'CASE-2025-011',
+    source_system: 'BankFeed',
+    event_type: 'payment_match',
+    detected_at: '2025-02-06 10:05:00',
+    amount: 5820,
+    status: 'resolved',
+    resolution_note: 'Bank feed matched reference ID; ledger updated; outreach canceled.',
+  },
+];
+
+// 13. Multi-Entity / Multi-Currency
+export const entityProfiles: EntityProfile[] = [
+  {
+    id: 'entity-1',
+    name: 'FedEx Express Europe',
+    region: 'EU',
+    currency: 'EUR',
+    timezone: 'CET',
+    local_compliance: ['GDPR', 'EBA Guidelines'],
+    dcas: ['Atlas Recoveries', 'BrightPath Collections'],
+    cases: 1820,
+    rules_summary: 'GDPR consent for outreach, 8am-8pm local contact rules, language-specific templates.',
+  },
+  {
+    id: 'entity-2',
+    name: 'FedEx Ground US',
+    region: 'US',
+    currency: 'USD',
+    timezone: 'ET/PT',
+    local_compliance: ['FDCPA', 'TCPA'],
+    dcas: ['Summit DCA', 'Pioneer Recoveries'],
+    cases: 2450,
+    rules_summary: 'Call frequency caps, Do-Not-Call scrubs, consented SMS only.',
+  },
+  {
+    id: 'entity-3',
+    name: 'FedEx Freight APAC',
+    region: 'APAC',
+    currency: 'SGD',
+    timezone: 'SGT',
+    local_compliance: ['PDPA', 'Spam Control Act'],
+    dcas: ['Harbor Collections'],
+    cases: 940,
+    rules_summary: 'SMS opt-in tracking, bilingual templates, weekly contact caps.',
+  },
+];
+
+// 14. AI Reasoning Cards
+export const assignmentReasoning: AssignmentReasoning[] = [
+  {
+    id: 'reason-1',
+    caseId: 'CASE-2025-001',
+    assigned_to: 'Atlas Recoveries',
+    confidence: 0.92,
+    factors: ['High recovery rate on freight >$25k', '92% success for Midwest accounts', 'Low complaint rate'],
+    expected_recovery_rate: 0.78,
+    justification: 'Atlas outperforms peers on B2B freight invoices over $25k in Midwest region.',
+  },
+  {
+    id: 'reason-2',
+    caseId: 'CASE-2025-010',
+    assigned_to: 'Pioneer Recoveries',
+    confidence: 0.81,
+    factors: ['Challenger program allocation', 'Best NPS in SMB cohort', 'Fastest first-contact time'],
+    expected_recovery_rate: 0.63,
+    justification: 'Testing challenger on SMB cohort with fast outreach; NPS advantage expected to lift recovery.',
+  },
+  {
+    id: 'reason-3',
+    caseId: 'CASE-2025-011',
+    assigned_to: 'BrightPath Collections',
+    confidence: 0.76,
+    factors: ['Strong APAC language coverage', 'High compliance score', 'Lower cost-to-collect'],
+    expected_recovery_rate: 0.61,
+    justification: 'Language coverage and compliance history make BrightPath optimal for APAC freight accounts.',
+  },
+];
+
+// 15. Regulatory Kill Switch
+export const killSwitchCases: KillSwitchCase[] = [
+  {
+    id: 'kill-1',
+    caseId: 'CASE-2025-012',
+    debtor_name: 'Mariner Logistics',
+    trigger_phrase: 'represented by legal counsel',
+    channel: 'chat',
+    triggered_at: '2025-02-06 11:05:00',
+    status: 'locked',
+    action_required: 'Escalate to FedEx Legal. Do not contact debtor until cleared.',
+  },
+  {
+    id: 'kill-2',
+    caseId: 'CASE-2025-013',
+    debtor_name: 'Silverline Supply',
+    trigger_phrase: 'cease and desist',
+    channel: 'email',
+    triggered_at: '2025-02-06 10:42:00',
+    status: 'review',
+    action_required: 'Legal review pending. Outbound communications paused.',
+  },
+  {
+    id: 'kill-3',
+    caseId: 'CASE-2025-014',
+    debtor_name: 'Aurora Retail',
+    trigger_phrase: 'filed a complaint',
+    channel: 'call',
+    triggered_at: '2025-02-06 09:55:00',
+    status: 'locked',
+    action_required: 'Case locked; notify compliance and document call transcript.',
+  },
+];
+
+// 16. Visualization Data
+export const sankeyFlows: SankeyFlow[] = [
+  { stage: 'overdue', amount: 5200000 },
+  { stage: 'assigned', amount: 4200000 },
+  { stage: 'recovered', amount: 2700000 },
+  { stage: 'written_off', amount: 900000 },
 ];

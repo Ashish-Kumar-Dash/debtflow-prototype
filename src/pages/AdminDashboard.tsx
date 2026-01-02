@@ -29,13 +29,22 @@ export default function AdminDashboard() {
           </div>
 
           {/* Quick Link to Automation Hub */}
-          <Link to="/automation">
-            <Button variant="outline" className="gap-2">
-              <Bot className="h-4 w-4" />
-              AI Automation Hub
-              <ArrowRight className="h-4 w-4" />
-            </Button>
-          </Link>
+          <div className="flex gap-3">
+            <Link to="/automation">
+              <Button variant="outline" className="gap-2">
+                <Bot className="h-4 w-4" />
+                AI Automation Hub
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+            <Link to="/innovation">
+              <Button className="gap-2" variant="default">
+                <Bot className="h-4 w-4" />
+                Innovation Lab
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* KPI Cards */}
