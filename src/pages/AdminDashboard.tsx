@@ -44,6 +44,13 @@ export default function AdminDashboard() {
                 <ArrowRight className="h-4 w-4" />
               </Button>
             </Link>
+            <Link to="/enterprise">
+              <Button className="gap-2" variant="secondary">
+                <Bot className="h-4 w-4" />
+                Enterprise Hub
+                <ArrowRight className="h-4 w-4" />
+              </Button>
+            </Link>
           </div>
         </div>
 

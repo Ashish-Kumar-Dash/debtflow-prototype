@@ -58,9 +58,9 @@ export function ResponseProcessing() {
                                         <span className="text-muted-foreground">Promise to Pay:</span>
                                         <span className="font-medium">
                                             {response.extracted_data.promise_to_pay ? (
-                                                <span className="text-green-600">✓ Yes</span>
+                                                <span className="text-green-600">Yes</span>
                                             ) : (
-                                                <span className="text-gray-600">✗ No</span>
+                                                <span className="text-gray-600">No</span>
                                             )}
                                         </span>
                                     </div>

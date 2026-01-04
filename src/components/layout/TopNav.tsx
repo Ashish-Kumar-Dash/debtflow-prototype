@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderOpen, Building2, Activity, FileText, UserCircle, ChevronDown, Zap } from 'lucide-react';
+import { LayoutDashboard, FolderOpen, Building2, Activity, FileText, UserCircle, ChevronDown, Zap, Shield } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import {
   DropdownMenu,
@@ -21,6 +21,7 @@ const adminNavItems = [
   { label: 'Audit Logs', href: '/audit-logs', icon: FileText },
   { label: 'Automation', href: '/automation', icon: Zap },
   { label: 'Innovation', href: '/innovation', icon: Zap },
+  { label: 'Enterprise', href: '/enterprise', icon: Shield },
 ];
 
 const agentNavItems = [

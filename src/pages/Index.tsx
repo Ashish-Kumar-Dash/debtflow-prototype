@@ -10,6 +10,7 @@ import SLAMonitor from './SLAMonitor';
 import AuditLogs from './AuditLogs';
 import Automation from './AutomationHub'
 import InnovationHub from './InnovationHub';
+import EnterpriseHub from './EnterpriseHub';
 export default function Index() {
   const [persona, setPersona] = useState<'admin' | 'agent'>('admin');
 
@@ -27,6 +28,7 @@ export default function Index() {
           <Route path="/audit-logs" element={<AuditLogs />} />
           <Route path="/automation" element={<Automation />} />
           <Route path="/innovation" element={<InnovationHub />} />
+          <Route path="/enterprise" element={<EnterpriseHub />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       ) : (

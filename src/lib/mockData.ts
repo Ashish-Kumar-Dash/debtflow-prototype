@@ -159,7 +159,7 @@ export interface ChannelStep {
   template_name: string;
   sent: boolean;
   sent_at?: string;
-  engagement_status?: 'pending' | 'opened' | 'clicked' | 'no_response';
+  engagement_status?: 'pending' | 'opened' | 'clicked' | 'delivered' | 'no_response';
 }
 
 // 8. Payment Plan Agreement
@@ -289,6 +289,102 @@ export interface KillSwitchCase {
 export interface SankeyFlow {
   stage: 'overdue' | 'assigned' | 'recovered' | 'written_off';
   amount: number;
+}
+
+// 17. Predictive Case Routing Engine
+export interface RoutingRecommendation {
+  id: string;
+  caseId: string;
+  predictedDCA: string;
+  routingConfidence: number;
+  factors: string[];
+  alternativeDCAs: Array<{ name: string; confidence: number }>;
+  expectedRecoveryRate: number;
+  expectedDaysToRecover: number;
+  rationale: string;
+}
+
+// 18. Debtor Sentiment Analyzer
+export interface SentimentAnalysis {
+  id: string;
+  caseId: string;
+  debtor_name: string;
+  channel: 'email' | 'sms' | 'call' | 'chat';
+  interactionAt: string;
+  sentimentScore: number;
+  category: 'positive' | 'neutral' | 'negative' | 'frustrated';
+  adjustmentTrigger: boolean;
+  recommendedTone: 'empathetic' | 'firm' | 'professional';
+  keyPhrases: string[];
+}
+
+export interface SentimentHeatmap {
+  dca: string;
+  positiveCount: number;
+  neutralCount: number;
+  negativeCount: number;
+  avgSentiment: number;
+  npsScore: number;
+}
+
+// 19. Dynamic Incentive Engine
+export interface IncentiveEvent {
+  id: string;
+  dca: string;
+  eventType: 'milestone' | 'compliance' | 'speed' | 'quality';
+  points: number;
+  badge?: string;
+  description: string;
+  achievedAt: string;
+}
+
+export interface DCAIncentive {
+  dca: string;
+  totalPoints: number;
+  currentRank: number;
+  badges: string[];
+  activeChallenges: Array<{ name: string; progress: number; target: number }>;
+  recentEvents: IncentiveEvent[];
+}
+
+// 20. Security & Privacy Layer
+export interface SecurityAudit {
+  id: string;
+  caseId: string;
+  scanType: 'pii_exposure' | 'data_masking' | 'access_log' | 'encryption_check';
+  status: 'passed' | 'warning' | 'failed';
+  riskLevel: 'low' | 'medium' | 'high' | 'critical';
+  findings: string[];
+  remediationSteps?: string[];
+  scannedAt: string;
+  complianceScore: number;
+}
+
+export interface PrivacyMask {
+  field: string;
+  originalValue: string;
+  maskedValue: string;
+  maskType: 'ssn' | 'email' | 'phone' | 'account_number';
+}
+
+// 21. Executive Reporting Suite
+export interface ExecutiveReport {
+  id: string;
+  reportType: 'weekly' | 'monthly' | 'quarterly';
+  generatedAt: string;
+  period: string;
+  narrative: string;
+  keyInsights: string[];
+  metrics: {
+    recoveryRate: number;
+    recoveryRateChange: number;
+    avgDaysToRecover: number;
+    avgDaysChange: number;
+    totalRecovered: number;
+    complianceScore: number;
+  };
+  recommendations: string[];
+  exportFormats: string[];
 }
 
 // KPI Data
@@ -620,7 +716,6 @@ export const debiorResponses: DebitorResponse[] = [
       promise_to_pay: true,
       amount: 23450,
       due_date: '2025-02-28',
-      hardship_claim: false,
       escalation_needed: false,
     },
     confidence_score: 0.98,
@@ -1173,3 +1268,249 @@ export const sankeyFlows: SankeyFlow[] = [
   { stage: 'recovered', amount: 2700000 },
   { stage: 'written_off', amount: 900000 },
 ];
+
+// 17. Predictive Case Routing
+export const routingRecommendations: RoutingRecommendation[] = [
+  {
+    id: 'route-1',
+    caseId: 'CASE-2025-015',
+    predictedDCA: 'Atlas Recoveries',
+    routingConfidence: 0.94,
+    factors: ['B2B freight >$25K', 'Midwest region', '92% historical success rate', 'Current capacity: 15 slots'],
+    alternativeDCAs: [
+      { name: 'Summit DCA', confidence: 0.78 },
+      { name: 'BrightPath Collections', confidence: 0.71 },
+    ],
+    expectedRecoveryRate: 0.89,
+    expectedDaysToRecover: 19,
+    rationale: 'Atlas Recoveries has 92% success on B2B freight invoices over $25K in Midwest region with fastest average recovery time.',
+  },
+  {
+    id: 'route-2',
+    caseId: 'CASE-2025-016',
+    predictedDCA: 'Pioneer Recoveries',
+    routingConfidence: 0.88,
+    factors: ['SMB Ground cohort', 'Challenger allocation slot', 'High NPS (52)', 'Fast first-contact (4.2h avg)'],
+    alternativeDCAs: [
+      { name: 'Summit DCA', confidence: 0.82 },
+      { name: 'Harbor Collections', confidence: 0.65 },
+    ],
+    expectedRecoveryRate: 0.63,
+    expectedDaysToRecover: 31,
+    rationale: 'Challenger allocation for SMB Ground testing. Pioneer has strong NPS and fastest outreach time in category.',
+  },
+  {
+    id: 'route-3',
+    caseId: 'CASE-2025-017',
+    predictedDCA: 'BrightPath Collections',
+    routingConfidence: 0.91,
+    factors: ['APAC region', 'Multi-language capability', 'GDPR compliance', '76% recovery in APAC freight'],
+    alternativeDCAs: [
+      { name: 'Harbor Collections', confidence: 0.84 },
+      { name: 'Atlas Recoveries', confidence: 0.58 },
+    ],
+    expectedRecoveryRate: 0.76,
+    expectedDaysToRecover: 24,
+    rationale: 'Language coverage and GDPR compliance history make BrightPath optimal for APAC freight accounts.',
+  },
+];
+
+// 18. Debtor Sentiment Analysis
+export const sentimentAnalyses: SentimentAnalysis[] = [
+  {
+    id: 'sent-1',
+    caseId: 'CASE-2025-001',
+    debtor_name: 'Acme Corp',
+    channel: 'email',
+    interactionAt: '2025-02-06 14:20:00',
+    sentimentScore: -0.62,
+    category: 'frustrated',
+    adjustmentTrigger: true,
+    recommendedTone: 'empathetic',
+    keyPhrases: ['unfair treatment', 'already explained this', 'tired of calls'],
+  },
+  {
+    id: 'sent-2',
+    caseId: 'CASE-2025-002',
+    debtor_name: 'TechStart Inc',
+    channel: 'sms',
+    interactionAt: '2025-02-06 10:15:00',
+    sentimentScore: 0.78,
+    category: 'positive',
+    adjustmentTrigger: false,
+    recommendedTone: 'professional',
+    keyPhrases: ['appreciate the flexibility', 'glad to work this out', 'thank you'],
+  },
+  {
+    id: 'sent-3',
+    caseId: 'CASE-2025-003',
+    debtor_name: 'Global Logistics LLC',
+    channel: 'call',
+    interactionAt: '2025-02-06 11:45:00',
+    sentimentScore: 0.15,
+    category: 'neutral',
+    adjustmentTrigger: false,
+    recommendedTone: 'professional',
+    keyPhrases: ['need more time', 'checking with finance', 'will call back'],
+  },
+  {
+    id: 'sent-4',
+    caseId: 'CASE-2025-005',
+    debtor_name: 'Metro Retail Group',
+    channel: 'chat',
+    interactionAt: '2025-02-06 15:30:00',
+    sentimentScore: -0.41,
+    category: 'negative',
+    adjustmentTrigger: true,
+    recommendedTone: 'empathetic',
+    keyPhrases: ['financial hardship', 'struggling', 'cant pay right now'],
+  },
+];
+
+export const sentimentHeatmaps: SentimentHeatmap[] = [
+  { dca: 'Atlas Recoveries', positiveCount: 142, neutralCount: 98, negativeCount: 34, avgSentiment: 0.52, npsScore: 58 },
+  { dca: 'Summit DCA', positiveCount: 89, neutralCount: 134, negativeCount: 67, avgSentiment: 0.21, npsScore: 38 },
+  { dca: 'Pioneer Recoveries', positiveCount: 156, neutralCount: 87, negativeCount: 28, avgSentiment: 0.61, npsScore: 67 },
+  { dca: 'BrightPath Collections', positiveCount: 112, neutralCount: 102, negativeCount: 45, avgSentiment: 0.38, npsScore: 48 },
+  { dca: 'Harbor Collections', positiveCount: 78, neutralCount: 92, negativeCount: 52, avgSentiment: 0.19, npsScore: 35 },
+];
+
+// 19. Dynamic Incentive Engine
+export const dcaIncentives: DCAIncentive[] = [
+  {
+    dca: 'Atlas Recoveries',
+    totalPoints: 1850,
+    currentRank: 1,
+    badges: ['Gold Recovery', 'Compliance Champion', 'Speed Demon'],
+    activeChallenges: [
+      { name: 'Q1 Freight Blitz', progress: 87, target: 100 },
+      { name: '95% Compliance Streak', progress: 92, target: 95 },
+    ],
+    recentEvents: [
+      { id: 'ev-1', dca: 'Atlas Recoveries', eventType: 'milestone', points: 100, badge: 'Speed Demon', description: 'Recovered 50 cases in 14 days', achievedAt: '2025-02-06' },
+      { id: 'ev-2', dca: 'Atlas Recoveries', eventType: 'compliance', points: 50, description: '99% compliance score this week', achievedAt: '2025-02-05' },
+    ],
+  },
+  {
+    dca: 'Pioneer Recoveries',
+    totalPoints: 1620,
+    currentRank: 2,
+    badges: ['Silver Recovery', 'Debtor Delight'],
+    activeChallenges: [
+      { name: 'Challenger Showcase', progress: 68, target: 100 },
+      { name: 'NPS Booster', progress: 82, target: 80 },
+    ],
+    recentEvents: [
+      { id: 'ev-3', dca: 'Pioneer Recoveries', eventType: 'quality', points: 75, badge: 'Debtor Delight', description: 'NPS score 67 (highest in cohort)', achievedAt: '2025-02-06' },
+    ],
+  },
+  {
+    dca: 'Summit DCA',
+    totalPoints: 1340,
+    currentRank: 3,
+    badges: ['Bronze Recovery'],
+    activeChallenges: [
+      { name: 'Consistency Builder', progress: 45, target: 100 },
+    ],
+    recentEvents: [
+      { id: 'ev-4', dca: 'Summit DCA', eventType: 'speed', points: 35, description: 'Avg recovery time under 30 days', achievedAt: '2025-02-04' },
+    ],
+  },
+];
+
+// 20. Security & Privacy Audits
+export const securityAudits: SecurityAudit[] = [
+  {
+    id: 'sec-1',
+    caseId: 'CASE-2025-001',
+    scanType: 'pii_exposure',
+    status: 'warning',
+    riskLevel: 'medium',
+    findings: ['SSN visible in email body', 'Account number in plain text log'],
+    remediationSteps: ['Enable auto-redaction for SSN patterns', 'Encrypt log storage'],
+    scannedAt: '2025-02-06 16:00:00',
+    complianceScore: 72,
+  },
+  {
+    id: 'sec-2',
+    caseId: 'CASE-2025-002',
+    scanType: 'data_masking',
+    status: 'passed',
+    riskLevel: 'low',
+    findings: [],
+    scannedAt: '2025-02-06 15:45:00',
+    complianceScore: 100,
+  },
+  {
+    id: 'sec-3',
+    caseId: 'CASE-2025-008',
+    scanType: 'access_log',
+    status: 'failed',
+    riskLevel: 'high',
+    findings: ['Unauthorized access attempt from IP 45.123.45.67', '3 failed login attempts in 10 minutes'],
+    remediationSteps: ['Block suspicious IP', 'Reset DCA portal credentials', 'Enable 2FA for all users'],
+    scannedAt: '2025-02-06 14:30:00',
+    complianceScore: 35,
+  },
+];
+
+// 21. Executive Reports
+export const executiveReports: ExecutiveReport[] = [
+  {
+    id: 'rep-1',
+    reportType: 'weekly',
+    generatedAt: '2025-02-07 08:00:00',
+    period: 'Week of Feb 1-7, 2025',
+    narrative: 'Recovery performance showed strong improvement this week, driven primarily by SMS escalation campaigns (+18% engagement) and settlement sandbox early-bird offers (78% acceptance rate). Atlas Recoveries maintained top position with 92% compliance and 19-day average recovery. Pioneer Recoveries challenger allocation showed promise with 67 NPS score, highest in SMB cohort. Recommend scaling SMS strategy to APAC region and expanding challenger allocation to 15% for Q2.',
+    keyInsights: [
+      'SMS campaigns drove 18% engagement increase vs email-only approach',
+      'Settlement offers with 5-day windows had 78% acceptance (vs 64% for 10-day)',
+      'Churn prediction caught 23 at-risk cases; 17 rescued with special offers (74% success)',
+      'Clean room reconciliation prevented 12 duplicate contact incidents',
+    ],
+    metrics: {
+      recoveryRate: 69.2,
+      recoveryRateChange: 2.8,
+      avgDaysToRecover: 21,
+      avgDaysChange: -2,
+      totalRecovered: 2890000,
+      complianceScore: 98.5,
+    },
+    recommendations: [
+      'Scale SMS escalation to FedEx Express Europe and APAC entities',
+      'Increase challenger allocation from 10% to 15% in Q2 based on Pioneer success',
+      'Deploy sentiment analyzer to all voice calls (currently email/SMS only)',
+      'Expand settlement sandbox window testing (3-day vs 5-day offers)',
+    ],
+    exportFormats: ['PDF', 'PowerPoint', 'PowerBI'],
+  },
+  {
+    id: 'rep-2',
+    reportType: 'monthly',
+    generatedAt: '2025-02-01 08:00:00',
+    period: 'January 2025',
+    narrative: 'January marked strong start to Q1 with recovery rate reaching 67.4% (+4.7% MoM). Automation features processed 1,247 daily actions with 892 AI recommendations, reducing agent workload 42%. Multi-channel orchestration achieved 68% success on initial contact sequences. Regulatory kill switch activated 3 times, preventing potential FDCPA violations. Key challenge: SLA breaches remain at 12; recommend capacity expansion with additional DCA onboarding.',
+    keyInsights: [
+      '42% reduction in agent manual workload through automation',
+      'AI routing engine achieved 94% confidence on B2B freight allocation',
+      'Debtor sentiment analysis flagged 34 frustrated interactions; 28 de-escalated successfully',
+      'DCA marketplace Q1 challenge drove 15% performance uplift',
+    ],
+    metrics: {
+      recoveryRate: 67.4,
+      recoveryRateChange: 4.7,
+      avgDaysToRecover: 23,
+      avgDaysChange: -1.2,
+      totalRecovered: 9450000,
+      complianceScore: 97.8,
+    },
+    recommendations: [
+      'Onboard 2 additional DCAs to reduce SLA breach rate',
+      'Expand predictive routing to all case types (currently B2B freight only)',
+      'Deploy executive reporting automation for C-suite visibility',
+      'Pilot zero-trust security upgrades in FedEx Ground US entity',
+    ],
+    exportFormats: ['PDF', 'PowerPoint', 'PowerBI', 'Excel'],
+  },
+];
+

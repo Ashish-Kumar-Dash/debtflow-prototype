@@ -143,7 +143,10 @@ export default function AutomationHub() {
                             <Sparkles className="h-5 w-5 text-primary" />
                             <h2 className="text-xl font-semibold text-foreground">Innovation Snapshot</h2>
                         </div>
-                        <Link to="/innovation" className="text-sm text-primary hover:underline">Open Innovation Lab</Link>
+                        <div className="flex gap-3">
+                            <Link to="/innovation" className="text-sm text-primary hover:underline">Open Innovation Lab</Link>
+                            <Link to="/enterprise" className="text-sm text-primary hover:underline">Open Enterprise Hub</Link>
+                        </div>
                     </div>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         <SettlementSandbox />
